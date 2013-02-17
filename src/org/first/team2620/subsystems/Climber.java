@@ -12,9 +12,9 @@ public class Climber {
     private int StopClimbLevel_ = 3;
     private double LHClimbPower_ = RobotMap.ClimbPower;
     private double RHClimbPower_ = -RobotMap.ClimbPower;
-    private double LegPower = RobotMap.LegPower;
-    private boolean LHClimb = true;
-    private boolean RHClimb = true;
+    private double LegPower_ = RobotMap.LegPower;
+    private boolean LHClimb_ = true;
+    private boolean RHClimb_ = true;
     
     private Thread ConveyorsThread_ = null;
     private Thread LegThread_ = null;
@@ -38,8 +38,8 @@ public class Climber {
                     {
                         if(RobotMap.LHTopHooked.get() && RobotMap.RHTopHooked.get()) // Both are on top hook
                         {
-                            LHClimb = true;
-                            RHClimb = true;
+                            LHClimb_ = true;
+                            RHClimb_ = true;
 
                             LHClimbPower_ *= -1;
                             RHClimbPower_ *= -1;
@@ -49,13 +49,13 @@ public class Climber {
                         {
                             if(RobotMap.LHMiddleHooked.get() && RobotMap.RHMiddleHooked.get()) // Both holding on middle
                             {
-                                LHClimb = true;
-                                RHClimb = true;
+                                LHClimb_ = true;
+                                RHClimb_ = true;
 
                                 if(LevelCount_ == StopClimbLevel_)
                                 {
-                                    LHClimb = false;
-                                    RHClimb = false;
+                                    LHClimb_ = false;
+                                    RHClimb_ = false;
                                 } 
                                 else
                                 {
@@ -68,32 +68,32 @@ public class Climber {
                                 // Level each side out at top
                                 if(RobotMap.LHTopHooked.get() && (RobotMap.RHTopHooked.get() == false)) // Left hand is ready to stop, right hand keep climbing to top
                                 {
-                                    LHClimb = false;
+                                    LHClimb_ = false;
                                 } 
                                 else if(RobotMap.RHTopHooked.get() && (RobotMap.LHTopHooked.get() == false)) // Right hand is ready to stop, left hand keep climbing to top
                                 {
-                                    RHClimb = false;
+                                    RHClimb_ = false;
                                 }
 
                                 // Level each side out at middle
                                 if(RobotMap.LHMiddleHooked.get() && (RobotMap.RHMiddleHooked.get() == false)) // Left hand is ready to stop, right hand keep climbing to top
                                 {
-                                    LHClimb = false;
+                                    LHClimb_ = false;
                                 } 
                                 else if(RobotMap.RHMiddleHooked.get() && (RobotMap.LHMiddleHooked.get() == false)) // Right hand is ready to stop, left hand keep climbing to top
                                 {
-                                    RHClimb = false;
+                                    RHClimb_ = false;
                                 }
                             }
                         }
 
-                        if(LHClimb) {
+                        if(LHClimb_) {
                             RobotMap.LHConveyor.set(LHClimbPower_);
                         } else {
                             RobotMap.LHConveyor.set(0);
                         }
 
-                        if(RHClimb) {
+                        if(RHClimb_) {
                             RobotMap.RHConveyor.set(RHClimbPower_);
                         } else {
                             RobotMap.RHConveyor.set(0);
@@ -131,7 +131,7 @@ public class Climber {
                         {
                             if(RobotMap.LegDown.get() == false)
                             {
-                                RobotMap.Leg.set(LegPower);
+                                RobotMap.Leg.set(LegPower_);
                             }
                             else
                             {
@@ -144,7 +144,7 @@ public class Climber {
                         {
                             if(RobotMap.LegUp.get() == false)
                             {
-                                RobotMap.Leg.set(-LegPower);
+                                RobotMap.Leg.set(-LegPower_);
                             }
                             else
                             {
@@ -158,7 +158,7 @@ public class Climber {
                     // Bring leg all the way up after it climbs all the way
                     while(RobotMap.LegUp.get() == false && End_ == false)
                     {
-                        RobotMap.Leg.set(-LegPower);
+                        RobotMap.Leg.set(-LegPower_);
                     }
                     RobotMap.Leg.set(0);
                 }
