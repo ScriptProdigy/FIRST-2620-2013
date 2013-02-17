@@ -13,7 +13,7 @@ public class Shooter {
     public boolean Shooting = false;
     Encoder ShooterAngle_;
     
-    public void shoot(final double distance)
+    public void shoot()
     {
         if(Shooting == false)
         {

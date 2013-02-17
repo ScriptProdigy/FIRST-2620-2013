@@ -10,25 +10,19 @@ package org.first.team2620;
 
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.first.team2620.subsystems.CameraDistanceCalc;
 import org.first.team2620.subsystems.Climber;
 import org.first.team2620.subsystems.Shooter;
 
 
 public class FRCRobot_2013 extends SimpleRobot 
 {
-    
-    public CameraDistanceCalc distanceCalc;
     public Shooter shooter;
 
     public Climber climber;
         
     public void robotInit()
     {
-        distanceCalc = null; //new CameraDistanceCalc("10.26.20.11");
         shooter = new Shooter();
-
         climber = new Climber();
     }
     
@@ -49,10 +43,8 @@ public class FRCRobot_2013 extends SimpleRobot
             RobotMap.drive.tankDrive(RobotMap.Joystick1.getY(), RobotMap.Joystick2.getY());
             shooter.insertShot();
             
-            if(RobotMap.Joystick1.getRawButton(1))
-            {
-                // TODO: get correct equation.
-                shooter.shoot(SmartDashboard.getNumber("range", 50));  
+            if(RobotMap.Joystick1.getRawButton(1)) {
+                shooter.shoot();  
             }
             
             if(RobotMap.Joystick1.getRawButton(8))
