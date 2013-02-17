@@ -22,7 +22,7 @@ public class Shooter {
                     {
                         Shooting = true;
 
-                        RobotMap.ShooterWheel.set(1);
+                        RobotMap.ShooterWheel.set(RobotMap.ShooterPower);
                         Thread.sleep(200);
                         
                         insertShot();

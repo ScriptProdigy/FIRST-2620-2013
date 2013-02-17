@@ -3,15 +3,17 @@ package org.first.team2620;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  * @author frc2620
  */
 public class RobotMap {
+    
+    private static Preferences pref;
     
     // Drive
     public static Jaguar LHDrive = new Jaguar(1);
@@ -31,17 +33,17 @@ public class RobotMap {
     
     public static Jaguar Leg = new Jaguar(6);
     
-    public static double ClimbPower = 1;
-    public static double LegPower = 1;
+    public static double ClimbPower = pref.getDouble("ClimbPower", 1);
+    public static double LegPower = pref.getDouble("LegPower", 1);
     public static DigitalInput LegUp = null;
     public static DigitalInput LegDown = null;
     
     
     // Shooter
     public static Relay DiskInsert = null; //new Relay(1);
-    public static Relay DiskFeeder = null; //new Relay(2);
     public static Jaguar ShooterWheel = new Jaguar(5);
     public static Jaguar ShooterLift = new Jaguar(7);
+    public static double ShooterPower = pref.getDouble("ShooterPower", 1);
 
     
     // Controls

@@ -1,5 +1,6 @@
 package org.first.team2620.subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import org.first.team2620.RobotMap;
 
 /**
@@ -98,6 +99,9 @@ public class Climber {
                         } else {
                             RobotMap.RHConveyor.set(0);
                         }
+                        
+                        
+                        Timer.delay(0.05);
                     }
 
                     // Just to make sure we stop climbing
@@ -152,13 +156,16 @@ public class Climber {
                                 bringDown = false;
                             }
                         }
-
+                        
+                        
+                        Timer.delay(0.05);
                     }
 
                     // Bring leg all the way up after it climbs all the way
                     while(RobotMap.LegUp.get() == false && End_ == false)
                     {
                         RobotMap.Leg.set(-LegPower_);
+                        Timer.delay(0.05);
                     }
                     RobotMap.Leg.set(0);
                 }
