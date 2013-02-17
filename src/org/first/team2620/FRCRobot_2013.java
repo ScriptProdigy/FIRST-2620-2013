@@ -40,7 +40,7 @@ public class FRCRobot_2013 extends SimpleRobot
         climber.newMatch();
         shooter.newMatch();
         
-        while(this.isOperatorControl() && isEnabled())
+        while(isOperatorControl() && isEnabled())
         {
             getWatchdog().feed();
             
@@ -75,7 +75,7 @@ public class FRCRobot_2013 extends SimpleRobot
     {
         LiveWindow.setEnabled(true);
         
-        while(this.isTest() && isEnabled())
+        while(isTest() && isEnabled())
         {
             getWatchdog().feed();
             
@@ -87,6 +87,8 @@ public class FRCRobot_2013 extends SimpleRobot
             } else {
                 RobotMap.ShooterWheel.set(0);
             }
+            
+            Timer.delay(0.05);
         }
         LiveWindow.setEnabled(false);
     }

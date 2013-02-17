@@ -53,13 +53,11 @@ public class Shooter {
                         relay.setDirection(Relay.Direction.kBoth);
                         
                         relay.set(Relay.Value.kForward);
-                        relay.set(Relay.Value.kOn);
                         
                         Thread.sleep(delayOut);
                         relay.set(Relay.Value.kOff);
                         
                         relay.set(Relay.Value.kReverse);
-                        relay.set(Relay.Value.kOn);
                         
                         Thread.sleep(delayIn);
                         relay.set(Relay.Value.kOff);
