@@ -110,6 +110,8 @@ public class FRCRobot_2013 extends SimpleRobot
             
             if(RobotMap.Joystick2.getRawButton(8)) {
                 RobotMap.ShooterWheel.set(0.75);
+            } else {
+                RobotMap.ShooterWheel.set(0);
             }
         }
         LiveWindow.setEnabled(false);
