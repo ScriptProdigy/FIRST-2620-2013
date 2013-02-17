@@ -37,6 +37,9 @@ public class FRCRobot_2013 extends SimpleRobot
     
     public void operatorControl() 
     {
+        climber.newMatch();
+        shooter.newMatch();
+        
         while(this.isOperatorControl() && isEnabled())
         {
             getWatchdog().feed();

@@ -1,6 +1,5 @@
 package org.first.team2620.subsystems;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Relay;
 import org.first.team2620.RobotMap;
 
@@ -71,5 +70,10 @@ public class Shooter {
                     }
                 }
             }).start();
+    }
+
+    public void newMatch()
+    {
+        Shooting = false;
     }
 }

@@ -174,5 +174,25 @@ public class Climber {
     {
         End_ = true;
     }
+    
+    
+    public void newMatch()
+    {
+        LevelCount_ = 0;
+        StopClimbLevel_ = 3;
+        LHClimbPower_ = RobotMap.ClimbPower;
+        RHClimbPower_ = -RobotMap.ClimbPower;
+        LegPower_ = RobotMap.LegPower;
+        LHClimb_ = true;
+        RHClimb_ = true;
+
+        ConveyorsThread_ = null;
+        LegThread_ = null;
+
+        End_ = false;
+
+        Climbing_ = false;
+
+    }
 
 }
