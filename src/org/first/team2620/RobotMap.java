@@ -1,6 +1,7 @@
 package org.first.team2620;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
@@ -41,8 +42,12 @@ public class RobotMap {
     
     // Shooter
     public static Relay DiskInsert = null; //new Relay(1);
+    
     public static Jaguar ShooterWheel = new Jaguar(5);
     public static Jaguar ShooterLift = new Jaguar(7);
+    public static Encoder ShooterWheelEncoder = null; //new Encoder(1,2);
+    
+    public static int FullCourtShotRpm = pref.getInt("FullCourtShotRpm", 50);
     public static double ShooterPower = pref.getDouble("ShooterPower", 1);
 
     

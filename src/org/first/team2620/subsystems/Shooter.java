@@ -1,6 +1,7 @@
 package org.first.team2620.subsystems;
 
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Timer;
 import org.first.team2620.RobotMap;
 
 /**
@@ -8,34 +9,46 @@ import org.first.team2620.RobotMap;
  * @author frc2620
  */
 public class Shooter {
-
-    public boolean Shooting = false;
     
     public void shoot()
     {
-        if(Shooting == false)
+        new Thread(new Runnable() 
         {
-            new Thread(new Runnable() {
+            public void run() 
+            {
+                try
+                {
+                    // Uncomment below and comment the code below that to enable running
+                    // by rpm of shooter instead of constant percentage to motor
+//                    boolean inThreshold = false;
+//                    double Speed = 0;
+//                    
+//                    while(!inThreshold)
+//                    {
+//                        inThreshold = (RobotMap.ShooterWheelEncoder.getRate() < (RobotMap.FullCourtShotRpm) + 10) 
+//                            && (RobotMap.ShooterWheelEncoder.getRate() > (RobotMap.FullCourtShotRpm) - 10);
+//                    
+//                        if(RobotMap.ShooterWheelEncoder.getRate() < RobotMap.FullCourtShotRpm) {
+//                            Speed += 0.1;
+//                        } else {
+//                            Speed += 0.1;
+//                        }
+//                        Timer.delay(0.01);
+//                        
+//                        RobotMap.ShooterWheel.set(Speed);
+//                    }
 
-                public void run() {
-                    try
-                    {
-                        Shooting = true;
+                    RobotMap.ShooterWheel.set(RobotMap.ShooterPower);
+                    Thread.sleep(200);
 
-                        RobotMap.ShooterWheel.set(RobotMap.ShooterPower);
-                        Thread.sleep(200);
-                        
-                        insertShot();
+                    insertShot();
 
-                        RobotMap.ShooterWheel.set(0);
-
-                        Shooting = false;
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
+                    RobotMap.ShooterWheel.set(0);
+                } catch(Exception e) {
+                    e.printStackTrace();
                 }
-            }).start();
-        }
+            }
+        }).start();
     }
     
     public void insertShot()
@@ -72,6 +85,6 @@ public class Shooter {
 
     public void newMatch()
     {
-        Shooting = false;
+        
     }
 }
