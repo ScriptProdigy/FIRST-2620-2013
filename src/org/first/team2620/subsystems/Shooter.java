@@ -11,7 +11,6 @@ import org.first.team2620.RobotMap;
 public class Shooter {
 
     public boolean Shooting = false;
-    Encoder ShooterAngle_;
     
     public void shoot()
     {

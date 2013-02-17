@@ -40,13 +40,16 @@ public class FRCRobot_2013 extends SimpleRobot
         while(this.isOperatorControl() && isEnabled())
         {
             getWatchdog().feed();
-            RobotMap.drive.tankDrive(RobotMap.Joystick1.getY(), RobotMap.Joystick2.getY());
-            shooter.insertShot();
             
-            if(RobotMap.Joystick1.getRawButton(1)) {
+            // Drive
+            drive();
+            
+            // Shooter
+            if(RobotMap.Joystick2.getRawButton(2)) {
                 shooter.shoot();  
             }
             
+            // Climber
             if(RobotMap.Joystick1.getRawButton(8))
             {
                 if(RobotMap.Joystick1.getRawButton(8) & RobotMap.Joystick1.getRawButton(9)) {
@@ -70,11 +73,11 @@ public class FRCRobot_2013 extends SimpleRobot
         while(this.isTest() && isEnabled())
         {
             getWatchdog().feed();
-            RobotMap.drive.tankDrive(RobotMap.Joystick1.getY() * RobotMap.DriveDirection, RobotMap.Joystick2.getY() * RobotMap.DriveDirection);
             
+            drive();
             manualConveyorControl();
             
-            if(RobotMap.Joystick2.getRawButton(8)) {
+            if(RobotMap.Joystick2.getRawButton(2)) {
                 RobotMap.ShooterWheel.set(0.75);
             } else {
                 RobotMap.ShooterWheel.set(0);
@@ -82,6 +85,7 @@ public class FRCRobot_2013 extends SimpleRobot
         }
         LiveWindow.setEnabled(false);
     }
+    
     
     public void manualConveyorControl()
     {
@@ -96,14 +100,6 @@ public class FRCRobot_2013 extends SimpleRobot
             else {
                 RobotMap.Leg.set(0);
             }
-        }
-
-        if(RobotMap.Joystick1.getRawButton(6)) {
-            RobotMap.DriveDirection = 1;
-        }
-
-        if(RobotMap.Joystick1.getRawButton(7)) {
-            RobotMap.DriveDirection = -1;
         }
 
         double ConveyorSpeed = (RobotMap.Joystick1.getThrottle() + 1) / 2; // from (-1 to 1) to (1, 0)
@@ -126,4 +122,21 @@ public class FRCRobot_2013 extends SimpleRobot
             }
         }
     }
+
+    
+    public void drive()
+    {
+        if(RobotMap.Joystick1.getRawButton(6)) {
+            RobotMap.DriveDirection = 1;
+        }
+
+        if(RobotMap.Joystick1.getRawButton(7)) {
+            RobotMap.DriveDirection = -1;
+        }
+
+        RobotMap.drive.tankDrive(RobotMap.Joystick1.getY() * RobotMap.DriveDirection, RobotMap.Joystick2.getY() * RobotMap.DriveDirection);
+
+    }
+
+
 }
