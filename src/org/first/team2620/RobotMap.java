@@ -33,6 +33,8 @@ public class RobotMap {
     
     public static double ClimbPower = 1;
     public static double LegPower = 1;
+    public static DigitalInput LegUp = null;
+    public static DigitalInput LegDown = null;
     
     
     // Shooter
