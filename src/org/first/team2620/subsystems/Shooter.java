@@ -11,24 +11,39 @@ import org.first.team2620.RobotMap;
 public class Shooter {
 
     public boolean Shooting = false;
-     Encoder ShooterAngle_;
-
+    Encoder ShooterAngle_;
     
-    public double distanceToAngle(double distance)
+    public void shoot(final double distance)
     {
-        // "-0.5714285714x + 55.7142857143";  x = distance
-        double m = -0.5714285714;
-        double b = 55.7142857143;
-        double angle = (m * distance) + b;
-        return angle;
+        if(Shooting == false)
+        {
+            new Thread(new Runnable() {
+
+                public void run() {
+                    try
+                    {
+                        Shooting = true;
+
+                        RobotMap.ShooterWheel.set(1);
+                        Thread.sleep(200);
+                        
+                        insertShot();
+
+                        RobotMap.ShooterWheel.set(0);
+
+                        Shooting = false;
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
     }
     
-    public double angleToDistance(double angle)
+    public void insertShot()
     {
-        double m = -0.5714285714;
-        double b = 55.7142857143;
-        double distance = (angle - b) / m;
-        return distance;
+        // TODO: Implement the correct out and in times
+        pushRelayThenReverse(RobotMap.DiskInsert, 100, 100);
     }
     
     private void pushRelayThenReverse(final Relay relay, final int delayOut, final int delayIn)
@@ -57,62 +72,5 @@ public class Shooter {
                     }
                 }
             }).start();
-    }
-    
-    public void shoot(final double distance)
-    {
-        if(Shooting == false)
-        {
-            new Thread(new Runnable() {
-
-                public void run() {
-                    try
-                    {
-                        Shooting = true;
-                        
-                        double liftAngleNeeded = distanceToAngle(distance);
-                        
-                        if(liftAngleNeeded < 90 && liftAngleNeeded > 0)
-                        {
-                            RobotMap.ShooterWheel.set(0.75); // Startup the shooter so that it has time to spin up
-                        
-                            boolean liftWithinThreshold = false;
-                            while(liftWithinThreshold == false)
-                            {
-                                if(ShooterAngle_.get() > liftAngleNeeded) {
-                                    RobotMap.ShooterWheel.set(0.5);
-                                }
-
-                                if(ShooterAngle_.get() < liftAngleNeeded) {
-                                    RobotMap.ShooterWheel.set(-0.5);
-                                }
-                                
-                                if(ShooterAngle_.get() > (liftAngleNeeded - 0.2) && ShooterAngle_.get() < (liftAngleNeeded + 0.2)) {
-                                    liftWithinThreshold = true;
-                                }
-                            }
-                            
-                            RobotMap.ShooterWheel.set(0);
-
-                            // TODO: Implement the correct out and in times
-                            pushRelayThenReverse(RobotMap.DiskFeeder, 1000, 1000);  
-
-                            Thread.sleep(250);
-                            RobotMap.ShooterWheel.set(0);
-                        }
-                        
-                        Shooting = false;
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        }
-    }
-    
-    public void insertShot()
-    {
-        // TODO: Implement the correct out and in times
-        pushRelayThenReverse(RobotMap.DiskInsert, 1000, 1000);
     }
 }
