@@ -10,7 +10,6 @@ package org.first.team2620;
 
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.first.team2620.subsystems.Climber;
 import org.first.team2620.subsystems.Shooter;
 
@@ -73,7 +72,6 @@ public class FRCRobot_2013 extends SimpleRobot
     
     public void test() 
     {
-        LiveWindow.setEnabled(true);
         
         while(isTest() && isEnabled())
         {
@@ -90,7 +88,6 @@ public class FRCRobot_2013 extends SimpleRobot
             
             Timer.delay(0.05);
         }
-        LiveWindow.setEnabled(false);
     }
     
     

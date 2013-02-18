@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.RobotDrive;
  */
 public class RobotMap {
     
-    private static Preferences pref;
-    
     // Drive
     public static Jaguar LHDrive = new Jaguar(1);
     public static Jaguar RHDrive = new Jaguar(2);
@@ -34,8 +32,8 @@ public class RobotMap {
     
     public static Jaguar Leg = new Jaguar(6);
     
-    public static double ClimbPower = pref.getDouble("ClimbPower", 1);
-    public static double LegPower = pref.getDouble("LegPower", 1);
+    public static double ClimbPower = Preferences.getInstance().getDouble("ClimbPower", 1);
+    public static double LegPower = Preferences.getInstance().getDouble("LegPower", 1);
     public static DigitalInput LegUp = null;
     public static DigitalInput LegDown = null;
     
@@ -47,8 +45,8 @@ public class RobotMap {
     public static Jaguar ShooterLift = new Jaguar(7);
     public static Encoder ShooterWheelEncoder = null; //new Encoder(1,2);
     
-    public static int FullCourtShotRpm = pref.getInt("FullCourtShotRpm", 50);
-    public static double ShooterPower = pref.getDouble("ShooterPower", 1);
+    public static int FullCourtShotRpm = Preferences.getInstance().getInt("FullCourtShotRpm", 50);
+    public static double ShooterPower = Preferences.getInstance().getDouble("ShooterPower", 1);
 
     
     // Controls
