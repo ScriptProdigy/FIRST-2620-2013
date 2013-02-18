@@ -20,27 +20,15 @@ public class Shooter {
                 {
                     // Uncomment below and comment the code below that to enable running
                     // by rpm of shooter instead of constant percentage to motor
-//                    boolean inThreshold = false;
-//                    double Speed = 0;
-//                    
-//                    while(!inThreshold)
-//                    {
-//                        inThreshold = (RobotMap.ShooterWheelEncoder.getRate() < (RobotMap.FullCourtShotRpm) + 10) 
-//                            && (RobotMap.ShooterWheelEncoder.getRate() > (RobotMap.FullCourtShotRpm) - 10);
-//                    
-//                        if(RobotMap.ShooterWheelEncoder.getRate() < RobotMap.FullCourtShotRpm) {
-//                            Speed += 0.1;
-//                        } else {
-//                            Speed += 0.1;
-//                        }
-//                        Timer.delay(0.01);
-//                        
-//                        RobotMap.ShooterWheel.set(Speed);
-//                    }
 
+                    // Bang-Bang Control
+                    //while(RobotMap.ShooterWheelEncoder.get() < RobotMap.FullCourtShotRpm)
+                    //{
+                    //    RobotMap.ShooterWheel.set(1);
+                    //    Timer.delay(0.01);
+                    //}
+                    
                     RobotMap.ShooterWheel.set(RobotMap.ShooterPower);
-                    Thread.sleep(200);
-
                     insertShot();
 
                     RobotMap.ShooterWheel.set(0);
