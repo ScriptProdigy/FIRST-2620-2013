@@ -18,7 +18,7 @@ public class RobotMap {
     public static Jaguar LHDrive = new Jaguar(1);
     public static Jaguar RHDrive = new Jaguar(2);
     public static int DriveDirection = 1; // 1, or -1
-    public static RobotDrive drive = new RobotDrive(LHDrive, RHDrive);
+    //public static RobotDrive drive = new RobotDrive(LHDrive, RHDrive);
     
     
     // Climbing

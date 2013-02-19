@@ -8,8 +8,10 @@
 package org.first.team2620;
 
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.first.team2620.subsystems.Climber;
 import org.first.team2620.subsystems.Shooter;
 
@@ -72,12 +74,12 @@ public class FRCRobot_2013 extends SimpleRobot
     
     public void test() 
     {
-        
+        LiveWindow.setEnabled(false);
         while(isTest() && isEnabled())
         {
             getWatchdog().feed();
             
-            drive();
+            //drive();
             manualConveyorControl();
             
             if(RobotMap.Joystick2.getRawButton(2)) {
@@ -138,7 +140,7 @@ public class FRCRobot_2013 extends SimpleRobot
             RobotMap.DriveDirection = -1;
         }
 
-        RobotMap.drive.tankDrive(RobotMap.Joystick1.getY() * RobotMap.DriveDirection, RobotMap.Joystick2.getY() * RobotMap.DriveDirection);
+        //RobotMap.drive.tankDrive(RobotMap.Joystick1.getY() * RobotMap.DriveDirection, RobotMap.Joystick2.getY() * RobotMap.DriveDirection);
 
     }
 
