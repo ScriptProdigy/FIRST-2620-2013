@@ -7,12 +7,15 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Victor;
 
 /**
  *
  * @author frc2620
  */
 public class RobotMap {
+    
+    public static Preferences prefs = Preferences.getInstance();
     
     // Drive
     public static Jaguar LHDrive = new Jaguar(1);
@@ -32,8 +35,8 @@ public class RobotMap {
     
     public static Jaguar Leg = new Jaguar(6);
     
-    public static double ClimbPower = Preferences.getInstance().getDouble("ClimbPower", 1);
-    public static double LegPower = Preferences.getInstance().getDouble("LegPower", 1);
+    public static double ClimbPower = prefs.getDouble("ClimbPower", 1);
+    public static double LegPower = prefs.getDouble("LegPower", 1);
     public static DigitalInput LegUp = null;
     public static DigitalInput LegDown = null;
     
@@ -41,12 +44,12 @@ public class RobotMap {
     // Shooter
     public static Relay DiskInsert = null; //new Relay(1);
     
-    public static Jaguar ShooterWheel = new Jaguar(5);
+    public static Victor ShooterWheel = new Victor(5);
     public static Jaguar ShooterLift = new Jaguar(7);
     public static Encoder ShooterWheelEncoder = null; //new Encoder(1,2);
     
-    public static int FullCourtShotRpm = Preferences.getInstance().getInt("FullCourtShotRpm", 50);
-    public static double ShooterPower = Preferences.getInstance().getDouble("ShooterPower", 1);
+    public static int FullCourtShotRpm = prefs.getInt("FullCourtShotRpm", 50);
+    public static double ShooterPower = prefs.getDouble("ShooterPower", 1);
 
     
     // Controls

@@ -79,7 +79,7 @@ public class FRCRobot_2013 extends SimpleRobot
         {
             getWatchdog().feed();
             
-            //drive();
+            drive();
             manualConveyorControl();
             
             if(RobotMap.Joystick2.getRawButton(2)) {
@@ -112,14 +112,14 @@ public class FRCRobot_2013 extends SimpleRobot
         if(RobotMap.Joystick1.getRawButton(1)) {
             RobotMap.LHConveyor.set(ConveyorSpeed);
             RobotMap.RHConveyor.set(-ConveyorSpeed);
-            System.out.println("Conveyor Speed: " + ConveyorSpeed);
+            //System.out.println("Conveyor Speed: " + ConveyorSpeed);
         }
         else
         {
             if(RobotMap.Joystick2.getRawButton(1)) {
                 RobotMap.LHConveyor.set(-ConveyorSpeed);
                 RobotMap.RHConveyor.set(ConveyorSpeed);
-                System.out.println("Conveyor Speed: " + ConveyorSpeed);
+                //System.out.println("Conveyor Speed: " + ConveyorSpeed);
             }
             else
             {
