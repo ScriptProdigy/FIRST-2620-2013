@@ -49,7 +49,7 @@ public class Climber {
                     
                     while(LevelCount_ <= StopClimbLevel_ && End_ == false)
                     {
-                        if(!RobotMap.LHTopHooked.get() && !RobotMap.RHTopHooked.get()) // Both are on top hook
+                        if(RobotMap.LHTop.get() && RobotMap.RHTop.get()) // Both are on top hook
                         {
                             LHClimb_ = true;
                             RHClimb_ = true;
@@ -60,7 +60,7 @@ public class Climber {
                         }
                         else
                         {
-                            if(!RobotMap.LHMiddleHooked.get() && !RobotMap.RHMiddleHooked.get()) // Both holding on middle
+                            if(RobotMap.LHMiddle.get() && RobotMap.RHMiddle.get()) // Both holding on middle
                             {
                                 LHClimb_ = true;
                                 RHClimb_ = true;
@@ -79,21 +79,21 @@ public class Climber {
                             else // Middle of climbing, lets keep this bad boy level
                             {
                                 // Level each side out at top
-                                if(!RobotMap.LHTopHooked.get() && RobotMap.RHTopHooked.get()) // Left hand is ready to stop, right hand keep climbing to top
+                                if(RobotMap.LHTop.get() && !RobotMap.RHTop.get()) // Left hand is ready to stop, right hand keep climbing to top
                                 {
                                     LHClimb_ = false;
                                 } 
-                                else if(!RobotMap.RHTopHooked.get() && RobotMap.LHTopHooked.get()) // Right hand is ready to stop, left hand keep climbing to top
+                                else if(RobotMap.RHTop.get() && !RobotMap.LHTop.get()) // Right hand is ready to stop, left hand keep climbing to top
                                 {
                                     RHClimb_ = false;
                                 }
 
                                 // Level each side out at middle
-                                if(!RobotMap.LHMiddleHooked.get() && RobotMap.RHMiddleHooked.get()) // Left hand is ready to stop, right hand keep climbing to top
+                                if(RobotMap.LHMiddle.get() && !RobotMap.RHMiddle.get()) // Left hand is ready to stop, right hand keep climbing to top
                                 {
                                     LHClimb_ = false;
                                 } 
-                                else if(!RobotMap.RHMiddleHooked.get() && RobotMap.LHMiddleHooked.get()) // Right hand is ready to stop, left hand keep climbing to top
+                                else if(RobotMap.RHMiddle.get() && !RobotMap.LHMiddle.get()) // Right hand is ready to stop, left hand keep climbing to top
                                 {
                                     RHClimb_ = false;
                                 }
@@ -133,12 +133,12 @@ public class Climber {
 
                     while(LevelCount_ < StopClimbLevel_ && End_ == false)
                     {
-                        if(!RobotMap.LHMiddleHooked.get() && !RobotMap.RHMiddleHooked.get()) // Both holding on middle, bring leg down
+                        if(RobotMap.LHMiddle.get() && RobotMap.RHMiddle.get()) // Both holding on middle, bring leg down
                         {
                             bringDown = true;
                         }
 
-                        if(!RobotMap.LHTopHooked.get() && !RobotMap.RHTopHooked.get()) // Both are set on top, bring leg up to get out of corners way
+                        if(RobotMap.LHTop.get() && RobotMap.RHTop.get()) // Both are set on top, bring leg up to get out of corners way
                         {
                             bringUp = true;
                         }

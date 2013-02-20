@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Victor;
+import org.first.team2620.subsystems.ConveyorProxSwitch;
 
 /**
  *
@@ -26,12 +27,12 @@ public class RobotMap {
     
     // Climbing
     public static Jaguar LHConveyor = new Jaguar(3);
-    public static DigitalInput LHTopHooked = null; //new DigitalInput(0);
-    public static DigitalInput LHMiddleHooked = null; //new DigitalInput(0);
+    public static ConveyorProxSwitch LHTop = new ConveyorProxSwitch(1);
+    public static ConveyorProxSwitch LHMiddle = new ConveyorProxSwitch(2); //new DigitalInput(0);
     
     public static Jaguar RHConveyor = new Jaguar(4);
-    public static DigitalInput RHTopHooked = null; //new DigitalInput(0);
-    public static DigitalInput RHMiddleHooked = null; //new DigitalInput(0);
+    public static ConveyorProxSwitch RHTop = new ConveyorProxSwitch(3); //new DigitalInput(0);
+    public static ConveyorProxSwitch RHMiddle = new ConveyorProxSwitch(4); //new DigitalInput(0);
     
     public static Jaguar Leg = new Jaguar(6);
     
