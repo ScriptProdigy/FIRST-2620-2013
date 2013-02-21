@@ -43,7 +43,7 @@ public class Climber {
                     RobotMap.LHConveyor.set(0);
                     RobotMap.RHConveyor.set(0);
                     
-                    while(!RobotMap.Joystick1.getRawButton(8)) {
+                    while(!RobotMap.Joystick1.getRawButton(8) && End_ == false) {
                         Timer.delay(0.1);
                     }
                     
