@@ -249,11 +249,20 @@ public class Climber {
     
     
     public void newMatch()
-    {
+    {        
+        previouslyReversed = false;
+        
+        upLeft_ = RobotMap.ClimbPower;
+        upRight_ = -RobotMap.ClimbPower;
+        downLeft_ = -RobotMap.ClimbPower;
+        downRight_ = RobotMap.ClimbPower;
+        
+        LHClimbPower_ = upLeft_;
+        RHClimbPower_ = upRight_;
+        
         LevelCount_ = 0;
         StopClimbLevel_ = 3;
-        LHClimbPower_ = RobotMap.ClimbPower;
-        RHClimbPower_ = -RobotMap.ClimbPower;
+        
         LegPower_ = RobotMap.LegPower;
         LHClimb_ = true;
         RHClimb_ = true;
