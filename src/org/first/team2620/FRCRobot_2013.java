@@ -8,7 +8,6 @@
 package org.first.team2620;
 
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -20,6 +19,7 @@ public class FRCRobot_2013 extends SimpleRobot
 {
     public Shooter shooter;
     public Climber climber;
+    public boolean ManualClimb = false;
         
     public void robotInit()
     {
@@ -58,12 +58,19 @@ public class FRCRobot_2013 extends SimpleRobot
             {
                 if(RobotMap.Joystick1.getRawButton(8) & RobotMap.Joystick1.getRawButton(9)) {
                     // Manual override of conveyors in case of emergencies. 
-                    
+                    ManualClimb = true;
                     climber.overRideClimb();
                     manualConveyorControl();
                 } else {
-                    
-                    climber.climb();
+                    if(ManualClimb == false)
+                    {
+                        climber.climb();
+                    }
+                    else
+                    {
+                        climber.overRideClimb();
+                        manualConveyorControl();
+                    }
                 }
             }
             
@@ -95,12 +102,12 @@ public class FRCRobot_2013 extends SimpleRobot
     
     public void manualConveyorControl()
     {
-        if(RobotMap.Joystick1.getRawButton(11)) {
+        if(RobotMap.Joystick1.getRawButton(6)) {
             RobotMap.Leg.set(1);
         }
         else
         {
-            if(RobotMap.Joystick1.getRawButton(10)) {
+            if(RobotMap.Joystick1.getRawButton(7)) {
                 RobotMap.Leg.set(-1);
             }
             else {
@@ -109,14 +116,14 @@ public class FRCRobot_2013 extends SimpleRobot
         }
 
         double ConveyorSpeed = (RobotMap.Joystick1.getThrottle() + 1) / 2; // from (-1 to 1) to (1, 0)
-        if(RobotMap.Joystick1.getRawButton(1)) {
+        if(RobotMap.Joystick1.getRawButton(11)) {
             RobotMap.LHConveyor.set(ConveyorSpeed);
             RobotMap.RHConveyor.set(-ConveyorSpeed);
             //System.out.println("Conveyor Speed: " + ConveyorSpeed);
         }
         else
         {
-            if(RobotMap.Joystick2.getRawButton(1)) {
+            if(RobotMap.Joystick1.getRawButton(12)) {
                 RobotMap.LHConveyor.set(-ConveyorSpeed);
                 RobotMap.RHConveyor.set(ConveyorSpeed);
                 //System.out.println("Conveyor Speed: " + ConveyorSpeed);
@@ -132,16 +139,15 @@ public class FRCRobot_2013 extends SimpleRobot
     
     public void drive()
     {
-        if(RobotMap.Joystick1.getRawButton(6)) {
+        if(RobotMap.Joystick1.getRawButton(4)) {
             RobotMap.DriveDirection = 1;
         }
 
-        if(RobotMap.Joystick1.getRawButton(7)) {
+        if(RobotMap.Joystick1.getRawButton(5)) {
             RobotMap.DriveDirection = -1;
         }
 
-        //RobotMap.drive.tankDrive(RobotMap.Joystick1.getY() * RobotMap.DriveDirection, RobotMap.Joystick2.getY() * RobotMap.DriveDirection);
-
+        RobotMap.drive.tankDrive(RobotMap.Joystick1.getY() * RobotMap.DriveDirection, RobotMap.Joystick2.getY() * RobotMap.DriveDirection);
     }
 
 
