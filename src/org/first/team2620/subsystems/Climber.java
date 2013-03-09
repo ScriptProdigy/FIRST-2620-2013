@@ -1,5 +1,6 @@
 package org.first.team2620.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import org.first.team2620.RobotMap;
 
@@ -11,8 +12,16 @@ public class Climber {
     
     private int LevelCount_ = 0;
     private int StopClimbLevel_ = 3;
-    private double LHClimbPower_ = RobotMap.ClimbPower;
-    private double RHClimbPower_ = -RobotMap.ClimbPower;
+    
+    private boolean previouslyReversed = false;
+    
+    private double upLeft_ = RobotMap.ClimbPower;
+    private double upRight_ = -RobotMap.ClimbPower;
+    private double downLeft_ = -RobotMap.ClimbPower;
+    private double downRight_ = RobotMap.ClimbPower;
+    private double LHClimbPower_ = upLeft_;
+    private double RHClimbPower_ = upRight_;
+    
     private double LegPower_ = RobotMap.LegPower;
     private boolean LHClimb_ = true;
     private boolean RHClimb_ = true;
@@ -34,68 +43,94 @@ public class Climber {
             ConveyorsThread_ = new Thread(new Runnable() {
 
                 public void run() {
+                    
+                    DriverStation inst = DriverStation.getInstance();
 
-                    RobotMap.LHConveyor.set(0.5);
-                    RobotMap.RHConveyor.set(0.5);
+                    RobotMap.RHConveyor.set(1);
                     
                     Timer.delay(0.2);
                     
-                    RobotMap.LHConveyor.set(0);
                     RobotMap.RHConveyor.set(0);
                     
+                    System.out.println("Conveyors unlatched, press 8 again to start auton climb");
                     while(!RobotMap.Joystick1.getRawButton(8) && End_ == false) {
                         Timer.delay(0.1);
                     }
                     
-                    while(LevelCount_ <= StopClimbLevel_ && End_ == false)
+                    System.out.println("Autonomous climb is beg");
+                    
+                    while(LevelCount_ <= StopClimbLevel_ && End_ == false && inst.isEnabled())
                     {
-                        if(RobotMap.LHTop.get() && RobotMap.RHTop.get()) // Both are on top hook
+                        boolean leftTop = RobotMap.LHTop.get();
+                        boolean leftMid = RobotMap.LHMiddle.get();
+                        
+                        boolean rightTop = RobotMap.RHTop.get();
+                        boolean rightMid = RobotMap.RHMiddle.get();
+                        
+                        if(leftTop && rightTop) // Both are on top hook
                         {
                             LHClimb_ = true;
                             RHClimb_ = true;
 
-                            LHClimbPower_ *= -1;
-                            RHClimbPower_ *= -1;
-                            LevelCount_ += 1;
+                            if(previouslyReversed == false)
+                            {
+                                previouslyReversed = true;
+                                LHClimbPower_ = upLeft_;
+                                RHClimbPower_ = upRight_;
+                                LevelCount_ += 1;
+                            }
                         }
                         else
                         {
-                            if(RobotMap.LHMiddle.get() && RobotMap.RHMiddle.get()) // Both holding on middle
+                            if(leftMid && rightMid) // Both holding on middle
                             {
+
                                 LHClimb_ = true;
                                 RHClimb_ = true;
 
+                                if(previouslyReversed == false)
+                                {
+                                    previouslyReversed = true;
+                                    LHClimbPower_ = downLeft_;
+                                    RHClimbPower_ = downRight_;
+                                }
+                                
                                 if(LevelCount_ == StopClimbLevel_)
                                 {
                                     LHClimb_ = false;
                                     RHClimb_ = false;
                                 } 
-                                else
-                                {
-                                    LHClimbPower_ *= -1;
-                                    RHClimbPower_ *= -1;
-                                }
                             }
                             else // Middle of climbing, lets keep this bad boy level
                             {
+                                previouslyReversed = false;
+                                
                                 // Level each side out at top
-                                if(RobotMap.LHTop.get() && !RobotMap.RHTop.get()) // Left hand is ready to stop, right hand keep climbing to top
+                                if(leftTop && !rightTop) // Left hand is ready to stop, right hand keep climbing to top
                                 {
                                     LHClimb_ = false;
                                 } 
-                                else if(RobotMap.RHTop.get() && !RobotMap.LHTop.get()) // Right hand is ready to stop, left hand keep climbing to top
+                                else 
                                 {
-                                    RHClimb_ = false;
-                                }
-
-                                // Level each side out at middle
-                                if(RobotMap.LHMiddle.get() && !RobotMap.RHMiddle.get()) // Left hand is ready to stop, right hand keep climbing to top
-                                {
-                                    LHClimb_ = false;
-                                } 
-                                else if(RobotMap.RHMiddle.get() && !RobotMap.LHMiddle.get()) // Right hand is ready to stop, left hand keep climbing to top
-                                {
-                                    RHClimb_ = false;
+                                    if(rightTop && !leftTop) // Right hand is ready to stop, left hand keep climbing to top
+                                    {
+                                        RHClimb_ = false;
+                                    }
+                                    else
+                                    {
+                                        // Level each side out at middle
+                                        if(leftMid && !rightMid) // Left hand is ready to stop, right hand keep climbing to top
+                                        {
+                                            LHClimb_ = false;
+                                        } 
+                                        else 
+                                        {
+                                            if(rightMid && !leftMid) // Right hand is ready to stop, left hand keep climbing to top
+                                            {
+                                                RHClimb_ = false;
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -113,8 +148,25 @@ public class Climber {
                         }
                         
                         
-                        Timer.delay(0.05);
+                        if(leftTop) {
+                            System.out.println("LH Top: " + leftTop);
+                        }
+                        
+                        if(leftMid) {
+                            System.out.println("LH Middle: " + leftMid);
+                        }
+                        
+                        if(rightTop) {
+                            System.out.println("RH Top: " + rightTop);
+                        }
+                        
+                        if(rightMid) {
+                            System.out.println("RH Middle: " + rightMid);
+                        }
+                        Timer.delay(0.1);
                     }
+                    
+                    System.out.println("!!! Finished climbing! ");
 
                     // Just to make sure we stop climbing
                     RobotMap.LHConveyor.set(0);
@@ -122,6 +174,7 @@ public class Climber {
                 }
 
             });
+
 
             // Leg Movement Thread
             LegThread_ = new Thread(new Runnable() {
