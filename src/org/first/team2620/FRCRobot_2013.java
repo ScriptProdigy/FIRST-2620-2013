@@ -50,7 +50,11 @@ public class FRCRobot_2013 extends SimpleRobot
             
             // Shooter
             if(RobotMap.Joystick2.getRawButton(2)) {
-                shooter.shoot();  
+                if(shooter.upToSpeed()) {
+                    shooter.shoot();  
+                } else {
+                    shooter.speedUp();
+                }
             }
             
             // Climber

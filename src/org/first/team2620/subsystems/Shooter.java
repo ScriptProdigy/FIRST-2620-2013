@@ -10,9 +10,27 @@ import org.first.team2620.RobotMap;
  */
 public class Shooter {
     
+    
+    public void speedUp()
+    {
+        if(upToSpeed())
+        {
+            RobotMap.ShooterWheel.set(0);
+        } else {
+            RobotMap.ShooterWheel.set(1);
+        }
+    }
+    
+    public boolean upToSpeed()
+    {
+        return (RobotMap.ShooterWheelEncoder.get() >= RobotMap.FullCourtShotRpm);
+    }
+    
     public void shoot()
     {
-        new Thread(new Runnable() 
+        insertShot();
+        
+        /*new Thread(new Runnable() 
         {
             public void run() 
             {
@@ -22,13 +40,13 @@ public class Shooter {
                     // by rpm of shooter instead of constant percentage to motor
 
                     // Bang-Bang Control
-                    //while(RobotMap.ShooterWheelEncoder.get() < RobotMap.FullCourtShotRpm)
-                    //{
-                    //    RobotMap.ShooterWheel.set(1);
-                    //    Timer.delay(0.01);
-                    //}
+                    while(RobotMap.ShooterWheelEncoder.get() < RobotMap.FullCourtShotRpm)
+                    {
+                        RobotMap.ShooterWheel.set(1);
+                        Timer.delay(0.01);
+                    }
                     
-                    RobotMap.ShooterWheel.set(RobotMap.ShooterPower);
+                    //RobotMap.ShooterWheel.set(RobotMap.ShooterPower);
                     insertShot();
 
                     RobotMap.ShooterWheel.set(0);
@@ -36,7 +54,7 @@ public class Shooter {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
     }
     
     public void insertShot()
