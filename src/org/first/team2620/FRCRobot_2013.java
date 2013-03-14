@@ -123,7 +123,7 @@ public class FRCRobot_2013 extends SimpleRobot
         }
         else
         {
-            if(RobotMap.Joystick1.getRawButton(12)) {
+            if(RobotMap.Joystick1.getRawButton(10)) {
                 RobotMap.LHConveyor.set(-ConveyorSpeed);
                 RobotMap.RHConveyor.set(ConveyorSpeed);
                 //System.out.println("Conveyor Speed: " + ConveyorSpeed);
