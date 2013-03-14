@@ -198,7 +198,7 @@ public class Climber {
 
                         if(bringDown)
                         {
-                            if(!RobotMap.LegDown.get() == false)
+                            if(RobotMap.LegDown.get() == false)
                             {
                                 RobotMap.Leg.set(LegPower_);
                             }
@@ -211,7 +211,7 @@ public class Climber {
 
                         if(bringUp)
                         {
-                            if(!RobotMap.LegUp.get() == false)
+                            if(RobotMap.LegUp.get() == false)
                             {
                                 RobotMap.Leg.set(-LegPower_);
                             }

@@ -90,6 +90,7 @@ public class FRCRobot_2013 extends SimpleRobot
         LiveWindow.setEnabled(false);
         while(isTest() && isEnabled())
         {
+            
             getWatchdog().feed();
             
             drive();
