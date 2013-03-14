@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Victor;
 import org.first.team2620.subsystems.ConveyorProxSwitch;
 
@@ -43,7 +44,7 @@ public class RobotMap {
     
     
     // Shooter
-    public static Relay DiskInsert = null; //new Relay(1);
+    public static Servo DiskInsert = new Servo(1);
     
     public static Victor ShooterWheel = new Victor(5);
     public static Jaguar ShooterLift = new Jaguar(7);

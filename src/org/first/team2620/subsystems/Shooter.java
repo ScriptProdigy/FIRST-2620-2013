@@ -1,6 +1,7 @@
 package org.first.team2620.subsystems;
 
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Timer;
 import org.first.team2620.RobotMap;
 
@@ -25,62 +26,24 @@ public class Shooter {
     {
         return (RobotMap.ShooterWheelEncoder.get() >= RobotMap.FullCourtShotRpm);
     }
-    
+
     public void shoot()
     {
-        insertShot();
-        
-        /*new Thread(new Runnable() 
-        {
-            public void run() 
-            {
-                try
-                {
-                    // Uncomment below and comment the code below that to enable running
-                    // by rpm of shooter instead of constant percentage to motor
-
-                    // Bang-Bang Control
-                    while(RobotMap.ShooterWheelEncoder.get() < RobotMap.FullCourtShotRpm)
-                    {
-                        RobotMap.ShooterWheel.set(1);
-                        Timer.delay(0.01);
-                    }
-                    
-                    //RobotMap.ShooterWheel.set(RobotMap.ShooterPower);
-                    insertShot();
-
-                    RobotMap.ShooterWheel.set(0);
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();*/
+        pushServoThenReverse(RobotMap.DiskInsert, 1.0, 100, 0.0);
     }
     
-    public void insertShot()
-    {
-        // TODO: Implement the correct out and in times
-        pushRelayThenReverse(RobotMap.DiskInsert, 100, 100);
-    }
-    
-    private void pushRelayThenReverse(final Relay relay, final int delayOut, final int delayIn)
+    private void pushServoThenReverse(final Servo servo, final double valueOut, final int delayOut, final double valueIn)
     {
         new Thread(new Runnable() {
 
                 public void run() {
                     try {
-                        relay.setDirection(Relay.Direction.kBoth);
                         
-                        relay.set(Relay.Value.kForward);
+                        servo.set(valueOut);
                         
                         Thread.sleep(delayOut);
-                        relay.set(Relay.Value.kOff);
                         
-                        relay.set(Relay.Value.kReverse);
-                        
-                        Thread.sleep(delayIn);
-                        relay.set(Relay.Value.kOff);
-                        
+                        servo.set(valueIn);
                         
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
