@@ -55,6 +55,8 @@ public class FRCRobot_2013 extends SimpleRobot
                 } else {
                     shooter.speedUp();
                 }
+            } else {
+                shooter.stop();
             }
             
             // Climber

@@ -22,6 +22,11 @@ public class Shooter {
         }
     }
     
+    public void stop()
+    {
+        RobotMap.ShooterWheel.set(0);
+    }
+    
     public boolean upToSpeed()
     {
         return (RobotMap.ShooterWheelEncoder.get() >= RobotMap.FullCourtShotRpm);
