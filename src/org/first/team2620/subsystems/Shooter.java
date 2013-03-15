@@ -43,12 +43,13 @@ public class Shooter {
     
     public boolean upToSpeed()
     {
+        System.out.println(RobotMap.ShooterWheelEncoder.get());
         return (RobotMap.ShooterWheelEncoder.get() >= RobotMap.FullCourtShotRpm);
     }
 
     public void shoot()
     {
-        pushServoThenReverse(RobotMap.DiskInsert, 1.0, 100, 0.0);
+        //pushServoThenReverse(RobotMap.DiskInsert, 1.0, 100, 0.0);
     }
     
     private void pushServoThenReverse(final Servo servo, final double valueOut, final int delayOut, final double valueIn)
@@ -73,6 +74,6 @@ public class Shooter {
 
     public void newMatch()
     {
-        
+        RobotMap.shooterLift.setDirection(Relay.Direction.kBoth);
     }
 }

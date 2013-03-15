@@ -32,22 +32,23 @@ public class RobotMap {
     public static ConveyorProxSwitch LHMiddle = new ConveyorProxSwitch(2); //new DigitalInput(0);
     
     public static Jaguar RHConveyor = new Jaguar(4);
-    public static ConveyorProxSwitch RHTop = new ConveyorProxSwitch(3); //new DigitalInput(0);
-    public static ConveyorProxSwitch RHMiddle = new ConveyorProxSwitch(4); //new DigitalInput(0);
+    public static ConveyorProxSwitch RHTop = new ConveyorProxSwitch(4); //new DigitalInput(0);
+    public static ConveyorProxSwitch RHMiddle = new ConveyorProxSwitch(3); //new DigitalInput(0);
     
     public static Jaguar Leg = new Jaguar(6);
     
-    public static double ClimbPower = prefs.getDouble("ClimbPower", 1);
+    public static double ClimbPower = prefs.getDouble("ClimbPower", 0.5);
     public static double LegPower = prefs.getDouble("LegPower", 1);
     public static DigitalInput LegUp = new DigitalInput(14);
     public static DigitalInput LegDown = new DigitalInput(5);
     
     
     // Shooter
-    public static Servo DiskInsert = null;//new Servo(1);
+    public static Servo DiskInsert = new Servo(8);
     
     public static Victor ShooterWheel = new Victor(5);
     public static Relay shooterLift = new Relay(2);
+     
     public static Encoder ShooterWheelEncoder = new Encoder(6,7);
     
     public static int FullCourtShotRpm = prefs.getInt("FullCourtShotRpm", 50);
@@ -58,6 +59,8 @@ public class RobotMap {
     public static Joystick Joystick1 = new Joystick(1);
     public static Joystick Joystick2 = new Joystick(2);
     public static Joystick Joystick3 = null; //new Joystick(3);
+    
+    public static Servo CameraServo = new Servo(9);
     
     // public static NetworkTable cameraTable = NetworkTable.getTable("camera");
 }

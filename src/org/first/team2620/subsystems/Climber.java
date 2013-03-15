@@ -15,10 +15,10 @@ public class Climber {
     
     private boolean previouslyReversed = false;
     
-    private double upLeft_ = RobotMap.ClimbPower;
-    private double upRight_ = -RobotMap.ClimbPower;
-    private double downLeft_ = -RobotMap.ClimbPower;
-    private double downRight_ = RobotMap.ClimbPower;
+    private double upLeft_ = -RobotMap.ClimbPower;
+    private double upRight_ = RobotMap.ClimbPower;
+    private double downLeft_ = RobotMap.ClimbPower;
+    private double downRight_ = -RobotMap.ClimbPower;
     private double LHClimbPower_ = upLeft_;
     private double RHClimbPower_ = upRight_;
     
@@ -136,13 +136,13 @@ public class Climber {
                         }
 
                         if(LHClimb_) {
-                            RobotMap.LHConveyor.set(LHClimbPower_);
+                            RobotMap.LHConveyor.set(-LHClimbPower_);
                         } else {
                             RobotMap.LHConveyor.set(0);
                         }
 
                         if(RHClimb_) {
-                            RobotMap.RHConveyor.set(RHClimbPower_);
+                            RobotMap.RHConveyor.set(-RHClimbPower_);
                         } else {
                             RobotMap.RHConveyor.set(0);
                         }
@@ -163,7 +163,7 @@ public class Climber {
                         if(rightMid) {
                             System.out.println("RH Middle: " + rightMid);
                         }
-                        Timer.delay(0.1);
+                        Timer.delay(0.01);
                     }
                     
                     System.out.println("!!! Finished climbing! ");
@@ -189,11 +189,13 @@ public class Climber {
                         if(RobotMap.LHMiddle.get() && RobotMap.RHMiddle.get()) // Both holding on middle, bring leg down
                         {
                             bringDown = true;
+                            System.out.println("LEG DOWN");
                         }
 
                         if(RobotMap.LHTop.get() && RobotMap.RHTop.get()) // Both are set on top, bring leg up to get out of corners way
                         {
                             bringUp = true;
+                            System.out.println("LEG UP");
                         }
 
                         if(bringDown)
