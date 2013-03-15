@@ -11,6 +11,20 @@ import org.first.team2620.RobotMap;
  */
 public class Shooter {
     
+    public void liftUp()
+    {
+        RobotMap.shooterLift.set(Relay.Value.kForward);
+    }
+    
+    public void liftDown()
+    {
+        RobotMap.shooterLift.set(Relay.Value.kReverse);
+    }
+    
+    public void stopLift()
+    {
+        RobotMap.shooterLift.set(Relay.Value.kOff);
+    }
     
     public void speedUp()
     {

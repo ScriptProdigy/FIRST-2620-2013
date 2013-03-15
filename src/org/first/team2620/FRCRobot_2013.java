@@ -48,8 +48,25 @@ public class FRCRobot_2013 extends SimpleRobot
             // Drive
             drive();
             
+            // Shooter Lift
+            if(RobotMap.Joystick2.getRawButton(2))
+            {
+                shooter.liftUp();
+            } 
+            else
+            {
+                if(RobotMap.Joystick2.getRawButton(3))
+                {
+                    shooter.liftDown();
+                } 
+                else
+                {
+                    shooter.stopLift();
+                }
+            }
+            
             // Shooter
-            if(RobotMap.Joystick2.getRawButton(2)) {
+            if(RobotMap.Joystick2.getRawButton(1)) {
                 if(shooter.upToSpeed()) {
                     shooter.shoot();  
                 } else {
@@ -146,7 +163,7 @@ public class FRCRobot_2013 extends SimpleRobot
     
     public void drive()
     {
-        if(RobotMap.Joystick1.getRawButton(4)) {
+        /*if(RobotMap.Joystick1.getRawButton(4)) {
             RobotMap.DriveDirection = 1;
         }
 
@@ -154,7 +171,8 @@ public class FRCRobot_2013 extends SimpleRobot
             RobotMap.DriveDirection = -1;
         }
 
-        RobotMap.drive.tankDrive(RobotMap.Joystick1.getY() * RobotMap.DriveDirection, RobotMap.Joystick2.getY() * RobotMap.DriveDirection);
+        RobotMap.drive.tankDrive(RobotMap.Joystick1.getY() * RobotMap.DriveDirection, RobotMap.Joystick2.getY() * RobotMap.DriveDirection);*/
+        RobotMap.drive.tankDrive(RobotMap.Joystick1.getY(), RobotMap.Joystick2.getY());
     }
 
 

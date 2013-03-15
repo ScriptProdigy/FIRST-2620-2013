@@ -39,16 +39,16 @@ public class RobotMap {
     
     public static double ClimbPower = prefs.getDouble("ClimbPower", 1);
     public static double LegPower = prefs.getDouble("LegPower", 1);
-    public static DigitalInput LegUp = new DigitalInput(5);
-    public static DigitalInput LegDown = new DigitalInput(6);
+    public static DigitalInput LegUp = new DigitalInput(14);
+    public static DigitalInput LegDown = new DigitalInput(5);
     
     
     // Shooter
     public static Servo DiskInsert = null;//new Servo(1);
     
     public static Victor ShooterWheel = new Victor(5);
-    public static Jaguar ShooterLift = new Jaguar(7);
-    public static Encoder ShooterWheelEncoder = null; //new Encoder(1,2);
+    public static Relay shooterLift = new Relay(2);
+    public static Encoder ShooterWheelEncoder = new Encoder(6,7);
     
     public static int FullCourtShotRpm = prefs.getInt("FullCourtShotRpm", 50);
     public static double ShooterPower = prefs.getDouble("ShooterPower", 1);
