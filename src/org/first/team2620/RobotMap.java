@@ -39,7 +39,7 @@ public class RobotMap {
     
     public static double ClimbPower = prefs.getDouble("ClimbPower", 0.5);
     public static double LegPower = prefs.getDouble("LegPower", 1);
-    public static DigitalInput LegUp = new DigitalInput(14);
+    public static DigitalInput LegUp = new DigitalInput(13);
     public static DigitalInput LegDown = new DigitalInput(5);
     
     

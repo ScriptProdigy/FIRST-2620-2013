@@ -49,7 +49,7 @@ public class FRCRobot_2013 extends SimpleRobot
             drive();
             
             // Shooter Lift
-            /*if(RobotMap.Joystick2.getRawButton(2))
+            if(RobotMap.Joystick2.getRawButton(2))
             {
                 shooter.liftUp();
                 System.out.println("SHOOTER DOWN");
@@ -68,7 +68,7 @@ public class FRCRobot_2013 extends SimpleRobot
             }
             
             // Shooter
-            
+            /*
             System.out.println("INSERT S : " + RobotMap.DiskInsert.get());
             System.out.println("CAMERA S : " + RobotMap.CameraServo.get());
             
@@ -90,8 +90,7 @@ public class FRCRobot_2013 extends SimpleRobot
                 RobotMap.DiskInsert.set(1);
                 System.out.println("DISK INSERT 1");
             }
-            
-            if(RobotMap.Joystick2.getRawButton(3))
+            else
             {
                 RobotMap.DiskInsert.set(0.1);
                 System.out.println("DISK INSERT 0");
@@ -210,13 +209,22 @@ public class FRCRobot_2013 extends SimpleRobot
     
     public void manualConveyorControl2()
     {
+        System.out.println("UP : " + RobotMap.LegUp.get());
+        System.out.println("DOWN : " + RobotMap.LegDown.get());
+        
         if(RobotMap.Joystick2.getRawButton(6)) {
-            RobotMap.Leg.set(1);
+            if(RobotMap.LegUp.get())
+            {
+                RobotMap.Leg.set(1);
+            }
         }
         else
         {
             if(RobotMap.Joystick2.getRawButton(7)) {
-                RobotMap.Leg.set(-1);
+                if(RobotMap.LegDown.get())
+                {
+                    RobotMap.Leg.set(-1);
+                }
             }
             else {
                 RobotMap.Leg.set(0);
