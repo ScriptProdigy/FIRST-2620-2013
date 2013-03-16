@@ -32,8 +32,7 @@ public class FRCRobot_2013 extends SimpleRobot
             
         RobotMap.ShooterWheel.set(1);
         RobotMap.DiskInsert.set(0.1);
-        int valueReq = 292;
-        int valueOffset = 5;
+        int valueReq = 291;
         
         while(isAutonomous())
         {
@@ -43,30 +42,22 @@ public class FRCRobot_2013 extends SimpleRobot
             System.out.println("VALUE: " + RobotMap.ShooterAngle.getValue());
             
             
-            if(RobotMap.ShooterAngle.getValue() > valueReq)
+            if(RobotMap.ShooterAngle.getValue() < valueReq)
             {
                 System.out.println("Lift Up");
-                shooter.liftUp();
+                shooter.liftDown();
             }
             else
             {
-                if(RobotMap.ShooterAngle.getValue() < valueReq)
-                {
-                    System.out.println("Lift Down");
-                    shooter.liftDown();
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
                 }
-                else
-                {
-                    if(((RobotMap.ShooterAngle.getValue()-valueOffset) > valueReq) && ((RobotMap.ShooterAngle.getValue()+valueOffset) < valueReq))
-                    {
-                        System.out.println("Shoot");
-                        shooter.stopLift();
-                        RobotMap.DiskInsert.set(1);
-                        RobotMap.ShooterWheel.set(0);
-                    }
-                }
-
-                
+                System.out.println("Shoot");
+                shooter.stopLift();
+                RobotMap.DiskInsert.set(1);
+                RobotMap.ShooterWheel.set(0);
             }
         }
     }
