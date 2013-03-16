@@ -1,5 +1,6 @@
 package org.first.team2620;
 
+import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Jaguar;
@@ -48,6 +49,7 @@ public class RobotMap {
     
     public static Victor ShooterWheel = new Victor(5);
     public static Relay shooterLift = new Relay(2);
+    public static AnalogChannel ShooterAngle = new AnalogChannel(1);
      
     public static Encoder ShooterWheelEncoder = new Encoder(6,7);
     
