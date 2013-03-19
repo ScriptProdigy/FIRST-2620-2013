@@ -13,12 +13,12 @@ public class Shooter {
     
     public void liftUp()
     {
-        RobotMap.shooterLift.set(Relay.Value.kForward);
+        RobotMap.shooterLift.set(Relay.Value.kReverse);
     }
     
     public void liftDown()
     {
-        RobotMap.shooterLift.set(Relay.Value.kReverse);
+        RobotMap.shooterLift.set(Relay.Value.kForward);
     }
     
     public void stopLift()

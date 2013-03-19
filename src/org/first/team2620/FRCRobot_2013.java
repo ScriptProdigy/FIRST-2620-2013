@@ -11,6 +11,8 @@ package org.first.team2620;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.first.team2620.subsystems.Climber;
 import org.first.team2620.subsystems.Shooter;
 
@@ -20,9 +22,17 @@ public class FRCRobot_2013 extends SimpleRobot
     public Shooter shooter;
     public Climber climber;
     public boolean ManualClimb = false;
+    public SendableChooser auton;
         
     public void robotInit()
     {
+        auton = new SendableChooser();
+        auton.addDefault("Back Left", (Object)String.valueOf(291));
+        auton.addObject("Back Right", (Object)String.valueOf(291));
+        auton.addObject("Front Left", (Object)String.valueOf(301));
+        auton.addObject("Front Right", (Object)String.valueOf(301));
+        SmartDashboard.putData("Autonomous Mode", auton);
+        
         shooter = new Shooter();
         climber = new Climber();
     }
@@ -32,7 +42,13 @@ public class FRCRobot_2013 extends SimpleRobot
             
         RobotMap.ShooterWheel.set(1);
         RobotMap.DiskInsert.set(0.1);
-        int valueReq = 291;
+        
+        int threshold = 10;
+        int valueReq = Integer.parseInt(auton.getSelected().toString()); //291;
+        System.out.println("Auton Angle Needed: " + valueReq);
+        
+        int shootCount = 0;
+        int totalShootCount = 3;
         
         while(isAutonomous())
         {
@@ -42,22 +58,46 @@ public class FRCRobot_2013 extends SimpleRobot
             System.out.println("VALUE: " + RobotMap.ShooterAngle.getValue());
             
             
-            if(RobotMap.ShooterAngle.getValue() < valueReq)
+            int angle = RobotMap.ShooterAngle.getValue();
+            boolean belowThreshold = valueReq > (angle-(threshold/2));
+            boolean aboveThreshold = (angle+(threshold/2)) > valueReq;
+            
+            if(belowThreshold)
             {
                 System.out.println("Lift Up");
-                shooter.liftDown();
+                shooter.liftUp();
             }
             else
             {
-                try {
-                    Thread.sleep(1);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                if(aboveThreshold)
+                {
+                    System.out.println("Lift Down");
+                    shooter.liftDown();
                 }
-                System.out.println("Shoot");
-                shooter.stopLift();
-                RobotMap.DiskInsert.set(1);
-                RobotMap.ShooterWheel.set(0);
+                else
+                {
+                    shooter.stopLift();
+                            
+                    if(shootCount < totalShootCount)
+                    {
+                        try {
+                            
+                            Thread.sleep(1000);
+                            RobotMap.DiskInsert.set(1);
+                            Thread.sleep(1000);
+                            RobotMap.DiskInsert.set(0.1);
+                            
+                            shootCount += 1;
+                            
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    else
+                    {
+                        RobotMap.ShooterWheel.set(0);
+                    }
+                }
             }
         }
     }
@@ -79,13 +119,13 @@ public class FRCRobot_2013 extends SimpleRobot
             drive();
             
             // Shooter Lift
-            if(RobotMap.Joystick2.getRawButton(2))
+            if(RobotMap.Joystick2.getRawButton(3))
             {
                 shooter.liftUp();
             } 
             else
             {
-                if(RobotMap.Joystick2.getRawButton(3))
+                if(RobotMap.Joystick2.getRawButton(2))
                 {
                     shooter.liftDown();
                 } 
@@ -95,24 +135,6 @@ public class FRCRobot_2013 extends SimpleRobot
                 }
             }
             
-            // Shooter
-            /*
-            System.out.println("INSERT S : " + RobotMap.DiskInsert.get());
-            System.out.println("CAMERA S : " + RobotMap.CameraServo.get());
-            
-            if(RobotMap.Joystick2.getRawButton(6))
-            {
-                RobotMap.DiskInsert.set(1);
-                System.out.println("CAMERA 1");
-            }
-            
-            if(RobotMap.Joystick2.getRawButton(7))
-            {
-                RobotMap.DiskInsert.set(0);
-                System.out.println("CAMERA 0");
-            }
-            
-            */
             if(RobotMap.Joystick2.getRawButton(4))
             {
                 RobotMap.DiskInsert.set(1);
@@ -130,41 +152,8 @@ public class FRCRobot_2013 extends SimpleRobot
             {
                 shooter.stop();
             }
-            
-            /*
-            
-            if(RobotMap.Joystick2.getRawButton(1)) {
-                if(shooter.upToSpeed()) {
-                    shooter.shoot(); 
-                } else {
-                    shooter.speedUp();
-                }
-            } else {
-                shooter.stop();
-            }
-            
-            // Climber
-            if(RobotMap.Joystick1.getRawButton(8))
-            {
-                if(RobotMap.Joystick1.getRawButton(8) & RobotMap.Joystick1.getRawButton(9)) {
-                    // Manual override of conveyors in case of emergencies. 
-                    ManualClimb = true;
-                    climber.overRideClimb();
-                    manualConveyorControl();
-                } else {
-                    if(ManualClimb == false)
-                    {
-                        climber.climb();
-                    }
-                    else
-                    {
-                        climber.overRideClimb();
-                        manualConveyorControl();
-                    }
-                }
-            }*/
-            
-            manualConveyorControl2();
+
+            manualConveyorControl();
             
             Timer.delay(0.05);
         }
@@ -193,50 +182,10 @@ public class FRCRobot_2013 extends SimpleRobot
         }
         RobotMap.DiskInsert.stopLiveWindowMode();
     }
-    
+
     
     public void manualConveyorControl()
     {
-        if(RobotMap.Joystick1.getRawButton(6)) {
-            RobotMap.Leg.set(1);
-        }
-        else
-        {
-            if(RobotMap.Joystick1.getRawButton(7)) {
-                RobotMap.Leg.set(-1);
-            }
-            else {
-                RobotMap.Leg.set(0);
-            }
-        }
-
-        double ConveyorSpeed = 1; // from (-1 to 1) to (1, 0)
-        if(RobotMap.Joystick1.getRawButton(11)) {
-            RobotMap.LHConveyor.set(ConveyorSpeed);
-            RobotMap.RHConveyor.set(-ConveyorSpeed);
-            //System.out.println("Conveyor Speed: " + ConveyorSpeed);
-        }
-        else
-        {
-            if(RobotMap.Joystick1.getRawButton(10)) {
-                RobotMap.LHConveyor.set(-ConveyorSpeed);
-                RobotMap.RHConveyor.set(ConveyorSpeed);
-                //System.out.println("Conveyor Speed: " + ConveyorSpeed);
-            }
-            else
-            {
-                RobotMap.LHConveyor.set(0);
-                RobotMap.RHConveyor.set(0);
-            }
-        }
-    }
-
-    
-    
-    public void manualConveyorControl2()
-    {
-        //System.out.println("UP : " + RobotMap.LegUp.get());
-        System.out.println("DOWN : " + RobotMap.LegDown.get());
         
         boolean legNotUp = RobotMap.LegUp.get();
         boolean legNotDown = RobotMap.LegDown.get();
