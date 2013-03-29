@@ -13,12 +13,26 @@ public class Shooter {
     
     public void liftUp()
     {
-        RobotMap.shooterLift.set(Relay.Value.kReverse);
+        if(RobotMap.ShooterAngle.getValue() < 397)
+        {
+            RobotMap.shooterLift.set(Relay.Value.kReverse);
+        }
+        else
+        {
+            stopLift();
+        }
     }
     
     public void liftDown()
     {
-        RobotMap.shooterLift.set(Relay.Value.kForward);
+        if(RobotMap.ShooterAngle.getValue() > 246)
+        {
+            RobotMap.shooterLift.set(Relay.Value.kForward);
+        }
+        else
+        {
+            stopLift();
+        }
     }
     
     public void stopLift()

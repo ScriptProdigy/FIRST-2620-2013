@@ -58,8 +58,8 @@ public class RobotMap {
 
     
     // Controls
-    public static Joystick Joystick1 = new Joystick(1);
-    public static Joystick Joystick2 = new Joystick(2);
+    public static Joystick Joystick1 = null; //new Joystick(1);
+    public static Joystick Joystick2 = new Joystick(1);
     public static Joystick Joystick3 = null; //new Joystick(3);
     
     public static Servo CameraServo = new Servo(9);

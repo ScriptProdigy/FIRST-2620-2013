@@ -71,7 +71,7 @@ public class FRCRobot_2013 extends SimpleRobot
             
             if(belowThreshold)
             {
-                System.out.println("Lift Up");
+                //System.out.println("Lift Up");
                 shooter.liftUp();
             }
             else
@@ -108,6 +108,8 @@ public class FRCRobot_2013 extends SimpleRobot
             }
         }
     }
+    // 243
+    // 397
 
     public void moveToPosition(int pos)
     {
@@ -116,7 +118,7 @@ public class FRCRobot_2013 extends SimpleRobot
          *   2 = Front Left
          *   3 = Front Right
          */
-        int valueReq = ShooterPositions[pos];
+        int valueReq = pos;
         
         int angle = RobotMap.ShooterAngle.getValue();
         boolean belowThreshold = valueReq > (angle-(threshold/2));
@@ -126,7 +128,7 @@ public class FRCRobot_2013 extends SimpleRobot
         {
             if(belowThreshold)
             {
-                System.out.println("Lift Up");
+                //System.out.println("Lift Up");
                 shooter.liftUp();
             }
             else
@@ -138,7 +140,7 @@ public class FRCRobot_2013 extends SimpleRobot
         {
             if(aboveThreshold)
             {
-                System.out.println("Lift Down");
+                //System.out.println("Lift Down");
                 shooter.liftDown();
             }
             else
@@ -158,8 +160,8 @@ public class FRCRobot_2013 extends SimpleRobot
         {
             getWatchdog().feed();
             
-            System.out.println("SHOOTER VALUE  ENCODER: " + RobotMap.ShooterAngle.getValue());
-            System.out.println("SHOOTER ANALOG ENCODER: " + RobotMap.ShooterAngle.getVoltage());
+            //System.out.println("SHOOTER VALUE  ENCODER: " + RobotMap.ShooterAngle.getValue());
+            //System.out.println("SHOOTER ANALOG ENCODER: " + RobotMap.ShooterAngle.getVoltage());
             
             // Drive
             drive();
@@ -167,7 +169,7 @@ public class FRCRobot_2013 extends SimpleRobot
             // Shooter Lift
             
             if(RobotMap.Joystick2.getRawButton(6) || RobotMap.Joystick2.getRawButton(7) ||
-                    RobotMap.Joystick2.getRawButton(11) || RobotMap.Joystick2.getRawButton(12))
+                    RobotMap.Joystick2.getRawButton(11) || RobotMap.Joystick2.getRawButton(10))
             {
                 Teleop_Move = true;
                 if(RobotMap.Joystick2.getRawButton(6))
@@ -178,11 +180,11 @@ public class FRCRobot_2013 extends SimpleRobot
                 {
                     Teleop_MoveToPosition = ShooterPositions[1];
                 }
-                else if(RobotMap.Joystick2.getRawButton(11))
+                else if(RobotMap.Joystick2.getRawButton(10))
                 {
                     Teleop_MoveToPosition = ShooterPositions[2];
                 }
-                else if(RobotMap.Joystick2.getRawButton(12))
+                else if(RobotMap.Joystick2.getRawButton(11))
                 {
                     Teleop_MoveToPosition = ShooterPositions[3];
                 }
@@ -274,7 +276,7 @@ public class FRCRobot_2013 extends SimpleRobot
         
         boolean legNotUp = RobotMap.LegUp.get();
         boolean legNotDown = RobotMap.LegDown.get();
-        if(RobotMap.Joystick1.getRawButton(3)) {
+        if(RobotMap.Joystick2.getRawButton(8)) {
             if(legNotUp)
             {
                 RobotMap.Leg.set(1);
@@ -282,7 +284,7 @@ public class FRCRobot_2013 extends SimpleRobot
         }
         else
         {
-            if(RobotMap.Joystick1.getRawButton(2)) {
+            if(RobotMap.Joystick2.getRawButton(9)) {
                 if(legNotDown)
                 {
                     RobotMap.Leg.set(-1);
@@ -293,7 +295,7 @@ public class FRCRobot_2013 extends SimpleRobot
             }
         }
 
-        double ConveyorSpeed = 1;
+        /*double ConveyorSpeed = 1;
         if(RobotMap.Joystick1.getRawButton(11))
         {
             RobotMap.RHConveyor.set(-ConveyorSpeed);
@@ -324,12 +326,13 @@ public class FRCRobot_2013 extends SimpleRobot
             {
                 RobotMap.LHConveyor.set(0);
             }
-        }
+        }*/
     }
     
     public void drive()
     {
-        RobotMap.drive.tankDrive(-RobotMap.Joystick1.getY(), -RobotMap.Joystick2.getY());
+        // RobotMap.drive.tankDrive(-RobotMap.Joystick1.getY(), -RobotMap.Joystick2.getY());
+        RobotMap.drive.arcadeDrive(RobotMap.Joystick2);
     }
 
 
