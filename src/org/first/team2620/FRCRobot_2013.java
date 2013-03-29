@@ -23,14 +23,22 @@ public class FRCRobot_2013 extends SimpleRobot
     public Climber climber;
     public boolean ManualClimb = false;
     public SendableChooser auton;
+    
+    
+    public int Teleop_MoveToPosition = 0;
+    public boolean Teleop_Move = false;
+    public boolean Teleop_MoveUp = true;
+    public int threshold = 10; 
+    public int[] ShooterPositions = new int[] { /* back left */ 291, /* back right */ 291, /* front left */ 301, /* front right */ 301 };
+        
         
     public void robotInit()
     {
         auton = new SendableChooser();
-        auton.addDefault("Back Left", (Object)String.valueOf(291));
-        auton.addObject("Back Right", (Object)String.valueOf(291));
-        auton.addObject("Front Left", (Object)String.valueOf(301));
-        auton.addObject("Front Right", (Object)String.valueOf(301));
+        auton.addDefault("Back Left", (Object)String.valueOf(ShooterPositions[0]));
+        auton.addObject("Back Right", (Object)String.valueOf(ShooterPositions[1]));
+        auton.addObject("Front Left", (Object)String.valueOf(ShooterPositions[2]));
+        auton.addObject("Front Right", (Object)String.valueOf(ShooterPositions[3]));
         SmartDashboard.putData("Autonomous Mode", auton);
         
         shooter = new Shooter();
@@ -43,19 +51,18 @@ public class FRCRobot_2013 extends SimpleRobot
         RobotMap.ShooterWheel.set(1);
         RobotMap.DiskInsert.set(0.1);
         
-        int threshold = 10;
         int valueReq = Integer.parseInt(auton.getSelected().toString()); //291;
         System.out.println("Auton Angle Needed: " + valueReq);
         
         int shootCount = 0;
-        int totalShootCount = 3;
+        int totalShootCount = 6;
         
         while(isAutonomous())
         {
             getWatchdog().feed();
             
             RobotMap.drive.tankDrive(0, 0);
-            System.out.println("VALUE: " + RobotMap.ShooterAngle.getValue());
+            //System.out.println("VALUE: " + RobotMap.ShooterAngle.getValue());
             
             
             int angle = RobotMap.ShooterAngle.getValue();
@@ -69,15 +76,15 @@ public class FRCRobot_2013 extends SimpleRobot
             }
             else
             {
-                if(aboveThreshold)
+                /*if(aboveThreshold)
                 {
                     System.out.println("Lift Down");
                     shooter.liftDown();
                 }
                 else
-                {
+                {*/
                     shooter.stopLift();
-                            
+                    
                     if(shootCount < totalShootCount)
                     {
                         try {
@@ -97,11 +104,50 @@ public class FRCRobot_2013 extends SimpleRobot
                     {
                         RobotMap.ShooterWheel.set(0);
                     }
-                }
+                //}
             }
         }
     }
 
+    public void moveToPosition(int pos)
+    {
+    /*  0 = Back Left
+         *   1 = Back Right
+         *   2 = Front Left
+         *   3 = Front Right
+         */
+        int valueReq = ShooterPositions[pos];
+        
+        int angle = RobotMap.ShooterAngle.getValue();
+        boolean belowThreshold = valueReq > (angle-(threshold/2));
+        boolean aboveThreshold = (angle+(threshold/2)) > valueReq;
+        
+        if(Teleop_MoveUp)
+        {
+            if(belowThreshold)
+            {
+                System.out.println("Lift Up");
+                shooter.liftUp();
+            }
+            else
+            {
+                shooter.stopLift();
+            }
+        }
+        else
+        {
+            if(aboveThreshold)
+            {
+                System.out.println("Lift Down");
+                shooter.liftDown();
+            }
+            else
+            {
+                shooter.stopLift();
+            }
+        }
+        
+    }
     
     public void operatorControl() 
     {
@@ -119,20 +165,59 @@ public class FRCRobot_2013 extends SimpleRobot
             drive();
             
             // Shooter Lift
+            
+            if(RobotMap.Joystick2.getRawButton(6) || RobotMap.Joystick2.getRawButton(7) ||
+                    RobotMap.Joystick2.getRawButton(11) || RobotMap.Joystick2.getRawButton(12))
+            {
+                Teleop_Move = true;
+                if(RobotMap.Joystick2.getRawButton(6))
+                {
+                    Teleop_MoveToPosition = ShooterPositions[0];
+                }
+                else if(RobotMap.Joystick2.getRawButton(7))
+                {
+                    Teleop_MoveToPosition = ShooterPositions[1];
+                }
+                else if(RobotMap.Joystick2.getRawButton(11))
+                {
+                    Teleop_MoveToPosition = ShooterPositions[2];
+                }
+                else if(RobotMap.Joystick2.getRawButton(12))
+                {
+                    Teleop_MoveToPosition = ShooterPositions[3];
+                }
+                
+                if(RobotMap.ShooterAngle.getValue() > Teleop_MoveToPosition)
+                {
+                    Teleop_MoveUp = false;
+                }
+                else
+                {
+                    Teleop_MoveUp = true;
+                }
+            }
+            
             if(RobotMap.Joystick2.getRawButton(3))
             {
                 shooter.liftUp();
+                Teleop_Move = false;
             } 
             else
             {
                 if(RobotMap.Joystick2.getRawButton(2))
                 {
                     shooter.liftDown();
+                    Teleop_Move = false;
                 } 
                 else
                 {
                     shooter.stopLift();
                 }
+            }
+            
+            if(Teleop_Move)
+            {
+                moveToPosition(Teleop_MoveToPosition);
             }
             
             if(RobotMap.Joystick2.getRawButton(4))
