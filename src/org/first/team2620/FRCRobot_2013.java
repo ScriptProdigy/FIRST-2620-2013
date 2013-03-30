@@ -8,6 +8,7 @@
 package org.first.team2620;
 
 
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SimpleRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -277,6 +278,7 @@ public class FRCRobot_2013 extends SimpleRobot
         boolean legNotUp = RobotMap.LegUp.get();
         boolean legNotDown = RobotMap.LegDown.get();
         if(RobotMap.Joystick2.getRawButton(8)) {
+            System.out.println("LEG UP: " + legNotUp);
             if(legNotUp)
             {
                 RobotMap.Leg.set(1);
@@ -285,6 +287,7 @@ public class FRCRobot_2013 extends SimpleRobot
         else
         {
             if(RobotMap.Joystick2.getRawButton(9)) {
+                System.out.println("LEG DOWN: " + legNotDown);
                 if(legNotDown)
                 {
                     RobotMap.Leg.set(-1);
@@ -332,6 +335,11 @@ public class FRCRobot_2013 extends SimpleRobot
     public void drive()
     {
         // RobotMap.drive.tankDrive(-RobotMap.Joystick1.getY(), -RobotMap.Joystick2.getY());
+        RobotMap.drive.setInvertedMotor(RobotDrive.MotorType.kFrontLeft, true);
+        RobotMap.drive.setInvertedMotor(RobotDrive.MotorType.kFrontRight, true);
+        RobotMap.drive.setInvertedMotor(RobotDrive.MotorType.kRearLeft, true);
+        RobotMap.drive.setInvertedMotor(RobotDrive.MotorType.kRearRight, true);
+        
         RobotMap.drive.arcadeDrive(RobotMap.Joystick2);
     }
 
