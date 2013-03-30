@@ -27,7 +27,7 @@ public class FRCRobot_2013 extends SimpleRobot
     public boolean Teleop_Move = false;
     public boolean Teleop_MoveUp = true;
     public int threshold = 2; 
-    public int[] ShooterPositions = new int[] { RobotMap.Shooter_BackLeft, RobotMap.Shooter_BackRight, RobotMap.Shooter_FrontLeft, RobotMap.Shooter_FrontRight };
+    public int[] ShooterPositions = new int[] { RobotMap.Shooter_BackLeft, RobotMap.Shooter_BackRight, RobotMap.Shooter_FrontLeft, RobotMap.Shooter_FrontRight, RobotMap.Shooter_HangingTwo};
         
         
     public void robotInit()
@@ -99,7 +99,10 @@ public class FRCRobot_2013 extends SimpleRobot
         RobotMap.Shooter_BackRight = RobotMap.prefs.getInt("Shooter_BackRight", 291);
         RobotMap.Shooter_FrontLeft = RobotMap.prefs.getInt("Shooter_FrontLeft", 301);
         RobotMap.Shooter_FrontRight = RobotMap.prefs.getInt("Shooter_FrontRight", 301);
-        ShooterPositions = new int[] { RobotMap.Shooter_BackLeft, RobotMap.Shooter_BackRight, RobotMap.Shooter_FrontLeft, RobotMap.Shooter_FrontRight };
+        RobotMap.Shooter_HangingTwo = RobotMap.prefs.getInt("Shooter_HangingTwo", 300);
+        ShooterPositions = new int[] { RobotMap.Shooter_BackLeft, RobotMap.Shooter_BackRight, 
+                                        RobotMap.Shooter_FrontLeft, RobotMap.Shooter_FrontRight, 
+                                        RobotMap.Shooter_HangingTwo};
         
 
         int valueReq = ShooterPositions[pos];
@@ -146,7 +149,8 @@ public class FRCRobot_2013 extends SimpleRobot
             // Shooter Lift
             
             if(RobotMap.Joystick2.getRawButton(6) || RobotMap.Joystick2.getRawButton(7) ||
-                    RobotMap.Joystick2.getRawButton(11) || RobotMap.Joystick2.getRawButton(10))
+                    RobotMap.Joystick2.getRawButton(11) || RobotMap.Joystick2.getRawButton(10)
+                    || RobotMap.Joystick2.getRawButton(5))
             {
                 Teleop_Move = true;
                 if(RobotMap.Joystick2.getRawButton(6))
@@ -165,6 +169,10 @@ public class FRCRobot_2013 extends SimpleRobot
                 {
                     Teleop_MoveToPosition = 3;
                 }
+                else if(RobotMap.Joystick2.getRawButton(5))
+                {
+                    Teleop_MoveToPosition = 4;
+                }
                 
                 if(RobotMap.ShooterAngle.getValue() > ShooterPositions[Teleop_MoveToPosition])
                 {
@@ -176,6 +184,7 @@ public class FRCRobot_2013 extends SimpleRobot
                 }
             }
             
+            //System.out.println("SHOOTER VALUE: " + RobotMap.ShooterAngle.getValue());
             if(RobotMap.Joystick2.getRawButton(3))
             {
                 shooter.liftUp();
@@ -238,9 +247,13 @@ public class FRCRobot_2013 extends SimpleRobot
     
     public void legControl()
     {
-        
         boolean legNotUp = RobotMap.LegUp.get();
+        System.out.println("LEG NOT UP : " + legNotUp);
+        
         boolean legNotDown = RobotMap.LegDown.get();
+        System.out.println("LEG NOT DOWN : " + legNotDown);
+        
+        
         if(RobotMap.Joystick2.getRawButton(8)) {
             if(legNotUp)
             {
