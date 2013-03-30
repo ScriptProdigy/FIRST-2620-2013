@@ -44,7 +44,10 @@ public class RobotMap {
     public static int FullCourtShotRpm = prefs.getInt("FullCourtShotRpm", 50);
     public static double ShooterPower = prefs.getDouble("ShooterPower", 1);
 
-    
+    public static int Shooter_BackLeft = prefs.getInt("Shooter_BackLeft", 291);
+    public static int Shooter_BackRight = prefs.getInt("Shooter_BackRight", 291);
+    public static int Shooter_FrontLeft = prefs.getInt("Shooter_FrontLeft", 301);
+    public static int Shooter_FrontRight = prefs.getInt("Shooter_FrontRight", 301);
     // Controls
     public static Joystick Joystick2 = new Joystick(1);
 }

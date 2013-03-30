@@ -26,8 +26,8 @@ public class FRCRobot_2013 extends SimpleRobot
     public int Teleop_MoveToPosition = 0;
     public boolean Teleop_Move = false;
     public boolean Teleop_MoveUp = true;
-    public int threshold = 10; 
-    public int[] ShooterPositions = new int[] { /* back left */ 291, /* back right */ 291, /* front left */ 301, /* front right */ 301 };
+    public int threshold = 2; 
+    public int[] ShooterPositions = new int[] { RobotMap.Shooter_BackLeft, RobotMap.Shooter_BackRight, RobotMap.Shooter_FrontLeft, RobotMap.Shooter_FrontRight };
         
         
     public void robotInit()
@@ -94,6 +94,14 @@ public class FRCRobot_2013 extends SimpleRobot
 
     public boolean shooterMoveToPosition(int pos) // Returns true if at position
     {
+        
+        RobotMap.Shooter_BackLeft = RobotMap.prefs.getInt("Shooter_BackLeft", 291);
+        RobotMap.Shooter_BackRight = RobotMap.prefs.getInt("Shooter_BackRight", 291);
+        RobotMap.Shooter_FrontLeft = RobotMap.prefs.getInt("Shooter_FrontLeft", 301);
+        RobotMap.Shooter_FrontRight = RobotMap.prefs.getInt("Shooter_FrontRight", 301);
+        ShooterPositions = new int[] { RobotMap.Shooter_BackLeft, RobotMap.Shooter_BackRight, RobotMap.Shooter_FrontLeft, RobotMap.Shooter_FrontRight };
+        
+
         int valueReq = ShooterPositions[pos];
         
         int angle = RobotMap.ShooterAngle.getValue();
@@ -102,17 +110,21 @@ public class FRCRobot_2013 extends SimpleRobot
         
         if(Teleop_MoveUp) {
             if(belowThreshold) {
+                //System.out.println("belowThreshold");
                 shooter.liftUp();
                 return false;
             } else {
+                //System.out.println("stopLift");
                 shooter.stopLift();
                 return true;
             }
         } else {
             if(aboveThreshold) {
+                //System.out.println("aboveThreshold");
                 shooter.liftDown();
                 return false;
             } else {
+                //System.out.println("stopLift ( above )");
                 shooter.stopLift();
                 return true;
             }
@@ -139,22 +151,22 @@ public class FRCRobot_2013 extends SimpleRobot
                 Teleop_Move = true;
                 if(RobotMap.Joystick2.getRawButton(6))
                 {
-                    Teleop_MoveToPosition = 0;
+                    Teleop_MoveToPosition = 2;
                 }
                 else if(RobotMap.Joystick2.getRawButton(7))
                 {
-                    Teleop_MoveToPosition = 1;
+                    Teleop_MoveToPosition = 0;
                 }
                 else if(RobotMap.Joystick2.getRawButton(10))
                 {
-                    Teleop_MoveToPosition = 2;
+                    Teleop_MoveToPosition = 1;
                 }
                 else if(RobotMap.Joystick2.getRawButton(11))
                 {
                     Teleop_MoveToPosition = 3;
                 }
                 
-                if(RobotMap.ShooterAngle.getValue() > Teleop_MoveToPosition)
+                if(RobotMap.ShooterAngle.getValue() > ShooterPositions[Teleop_MoveToPosition])
                 {
                     Teleop_MoveUp = false;
                 }
@@ -184,6 +196,7 @@ public class FRCRobot_2013 extends SimpleRobot
             
             if(Teleop_Move)
             {
+                System.out.println("Teleop_Move: true, " + Teleop_MoveToPosition);
                 shooterMoveToPosition(Teleop_MoveToPosition);
             }
             
