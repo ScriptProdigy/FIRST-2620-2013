@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Victor;
-import org.first.team2620.subsystems.ConveyorProxSwitch;
 
 /**
  *
@@ -26,19 +25,8 @@ public class RobotMap {
     public static int DriveDirection = 1; // 1, or -1
     public static RobotDrive drive = new RobotDrive(LHDrive, RHDrive);
     
-    
-    // Climbing
-    public static Jaguar LHConveyor = new Jaguar(3);
-    public static ConveyorProxSwitch LHTop = new ConveyorProxSwitch(1);
-    public static ConveyorProxSwitch LHMiddle = new ConveyorProxSwitch(2); //new DigitalInput(0);
-    
-    public static Jaguar RHConveyor = new Jaguar(4);
-    public static ConveyorProxSwitch RHTop = new ConveyorProxSwitch(4); //new DigitalInput(0);
-    public static ConveyorProxSwitch RHMiddle = new ConveyorProxSwitch(3); //new DigitalInput(0);
-    
+
     public static Jaguar Leg = new Jaguar(6);
-    
-    public static double ClimbPower = prefs.getDouble("ClimbPower", 0.5);
     public static double LegPower = prefs.getDouble("LegPower", 1);
     public static DigitalInput LegUp = new DigitalInput(13);
     public static DigitalInput LegDown = new DigitalInput(5);
@@ -58,11 +46,5 @@ public class RobotMap {
 
     
     // Controls
-    public static Joystick Joystick1 = null; //new Joystick(1);
     public static Joystick Joystick2 = new Joystick(1);
-    public static Joystick Joystick3 = null; //new Joystick(3);
-    
-    public static Servo CameraServo = new Servo(9);
-    
-    // public static NetworkTable cameraTable = NetworkTable.getTable("camera");
 }
