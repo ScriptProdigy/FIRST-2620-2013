@@ -268,7 +268,8 @@ public class FRCRobot_2013 extends SimpleRobot
                     RobotMap.Leg.set(-1);
                 }
             }
-            else {
+            else 
+            {
                 RobotMap.Leg.set(0);
             }
         }
